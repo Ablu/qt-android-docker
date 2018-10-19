@@ -25,10 +25,10 @@ RUN wget -q https://download.qt.io/archive/qt/$QT_MAJOR.$QT_MINOR/$QT_MAJOR.$QT_
     && rm $INSTALLER_FILE
 RUN wget -q https://dl.google.com/android/repository/sdk-tools-linux-$SDK_VERSION.zip \
     && mkdir /android-sdk-linux && cd /android-sdk-linux \
-    && unzip /sdk-tools-linux-$SDK_VERSION.zip && rm /sdk-tools-linux-$SDK_VERSION.zip
-RUN yes | sdkmanager "platform-tools" "build-tools;28.0.2" "platforms;$ANDROID_API"
+    && unzip -q /sdk-tools-linux-$SDK_VERSION.zip && rm /sdk-tools-linux-$SDK_VERSION.zip
+RUN yes | sdkmanager "platform-tools" "build-tools;28.0.2" "platforms;$ANDROID_API" | (grep -v = || true)
 RUN wget -q https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux-x86_64.zip \
-    && unzip android-ndk-${NDK_VERSION}-linux-x86_64.zip && rm android-ndk-${NDK_VERSION}-linux-x86_64.zip
+    && unzip -q android-ndk-${NDK_VERSION}-linux-x86_64.zip && rm android-ndk-${NDK_VERSION}-linux-x86_64.zip
 
 ENV ANDROID_NDK_ROOT /android-ndk-$NDK_VERSION
 ENV ANDROID_SDK_ROOT /android-sdk-linux
