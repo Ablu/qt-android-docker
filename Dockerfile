@@ -35,5 +35,5 @@ ENV ANDROID_SDK_ROOT /android-sdk-linux
 
 ENV QT_HOME /opt/Qt/$QT_MAJOR.$QT_MINOR.$QT_PATCH
 
-ADD build-openssh.sh /
-RUN /build-openssh.sh
+ADD build-openssl.sh /
+RUN /build-openssl.sh
