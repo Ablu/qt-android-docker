@@ -44,6 +44,6 @@ function build {
 rm -rf libs/
 
 build "armv7" "arm" "arm-linux-androideabi-4.9" "arm-linux-androideabi"
-#build "i686" "x86" "x86-4.9" "i686-linux-android"
+build "i686" "x86" "x86-4.9" "i686-linux-android"
 
 rm openssl-$OPENSSL_VERSION.tar.gz
