@@ -17,6 +17,7 @@ function build {
     export ARCH="$2"
     TOOLCHAIN="$3"
     COMPILER_PREFIX="$4"
+    LIBS_FOLDER_NAME="$5"
 
     export NDK_SYSROOT="$ANDROID_NDK_ROOT/platforms/$ANDROID_API/arch-$ARCH"
     export CROSS_COMPILE="$COMPILER_PREFIX-"
@@ -36,14 +37,14 @@ function build {
 
     popd
 
-    mkdir -p libs/$ARCH/
-    cp openssl-$OPENSSL_VERSION/lib{ssl,crypto}.so libs/$ARCH/
+    mkdir -p libs/$LIBS_FOLDER_NAME/
+    cp openssl-$OPENSSL_VERSION/lib{ssl,crypto}.so libs/$LIBS_FOLDER_NAME/
     rm -r openssl-$OPENSSL_VERSION/
 }
 
 rm -rf libs/
 
-build "armv7" "arm" "arm-linux-androideabi-4.9" "arm-linux-androideabi"
-build "i686" "x86" "x86-4.9" "i686-linux-android"
+build "armv7" "arm" "arm-linux-androideabi-4.9" "arm-linux-androideabi" "armeabi-v7a"
+build "i686" "x86" "x86-4.9" "i686-linux-android" "x86"
 
 rm openssl-$OPENSSL_VERSION.tar.gz
