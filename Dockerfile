@@ -10,8 +10,8 @@ ENV SDK_VERSION 4333796
 
 ENV QT_CI_PACKAGES qt.qt$QT_MAJOR.${QT_MAJOR}${QT_MINOR}${QT_PATCH}.android_armv7
 
-RUN dnf install -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make which \
-    && dnf clean all && rm -rf /var/cache/dnf/*
+RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make which \
+    && dnf clean all -q && rm -rf /var/cache/dnf/*
 
 # https://github.com/benlau/qtci/pull/13
 RUN git clone https://github.com/mrgreywater/qtci.git \
