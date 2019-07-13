@@ -1,16 +1,16 @@
 FROM fedora:29
 
 ENV QT_MAJOR 5
-ENV QT_MINOR 11
-ENV QT_PATCH 2
-ENV NDK_VERSION r15c
-ENV ANDROID_API android-19
-ENV OPENSSL_VERSION 1.0.2p
+ENV QT_MINOR 13
+ENV QT_PATCH 0
+ENV NDK_VERSION r19c
+ENV ANDROID_API 28
+ENV OPENSSL_VERSION 1.1.1c
 ENV SDK_VERSION 4333796
 
 ENV QT_CI_PACKAGES qt.qt$QT_MAJOR.${QT_MAJOR}${QT_MINOR}${QT_PATCH}.android_armv7
 
-RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make which \
+RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make imake which \
     && dnf clean all -q && rm -rf /var/cache/dnf/*
 
 # https://github.com/benlau/qtci/pull/13
@@ -26,7 +26,7 @@ RUN wget -q https://download.qt.io/archive/qt/$QT_MAJOR.$QT_MINOR/$QT_MAJOR.$QT_
 RUN wget -q https://dl.google.com/android/repository/sdk-tools-linux-$SDK_VERSION.zip \
     && mkdir /android-sdk-linux && cd /android-sdk-linux \
     && unzip -q /sdk-tools-linux-$SDK_VERSION.zip && rm /sdk-tools-linux-$SDK_VERSION.zip
-RUN yes | sdkmanager "platform-tools" "build-tools;28.0.2" "platforms;$ANDROID_API" | (grep -v = || true)
+RUN yes | sdkmanager "platform-tools" "build-tools;28.0.2" "platforms;android-$ANDROID_API" | (grep -v = || true)
 RUN wget -q https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux-x86_64.zip \
     && unzip -q android-ndk-${NDK_VERSION}-linux-x86_64.zip && rm android-ndk-${NDK_VERSION}-linux-x86_64.zip
 
