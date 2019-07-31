@@ -13,9 +13,9 @@ ENV QT_CI_PACKAGES qt.qt$QT_MAJOR.${QT_MAJOR}${QT_MINOR}${QT_PATCH}.android_armv
 RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make imake which \
     && dnf clean all -q && rm -rf /var/cache/dnf/*
 
-# https://github.com/benlau/qtci/pull/13
-RUN git clone https://github.com/mrgreywater/qtci.git \
-    && cd qtci && git checkout cb95275fdab475e46c32a7fe9a1a60897c0229d9
+# https://github.com/benlau/qtci/pull/25
+RUN git clone https://github.com/Ablu/qtci.git \
+    && cd qtci && git checkout f8af717ef2e601f5f52b204bb02939508bd1cc14
 
 ENV PATH "/opt/Qt/$QT_MAJOR.$QT_MINOR.$QT_PATCH/android_armv7/bin:/android-sdk-linux/tools/bin/:/qtci/bin/:/qtci/recipes/:$PATH"
 ENV VERBOSE 1
