@@ -11,13 +11,13 @@ ENV SPEC android-clang
 
 ENV QT_CI_PACKAGES qt.qt$QT_MAJOR.${QT_MAJOR}${QT_MINOR}${QT_PATCH}.android_armv7
 
-RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make imake which \
+RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make imake which findutils \
     && dnf clean all -q && rm -rf /var/cache/dnf/*
 
 # https://github.com/benlau/qtci/pull/25
-# https://github.com/benlau/qtci/pull/27
+# https://github.com/benlau/qtci/pull/28
 RUN git clone https://github.com/Ablu/qtci.git \
-    && cd qtci && git checkout 1ec9820e32e51781fbf695f6369301d9f1dd917a
+    && cd qtci && git checkout cf7771ce14150569046a61fbec644ae93c85122d
 
 ENV PATH "/opt/Qt/$QT_MAJOR.$QT_MINOR.$QT_PATCH/android_armv7/bin:/android-sdk-linux/tools/bin/:/qtci/bin/:/qtci/recipes/:$PATH"
 ENV VERBOSE 1
