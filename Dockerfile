@@ -15,8 +15,9 @@ RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-d
     && dnf clean all -q && rm -rf /var/cache/dnf/*
 
 # https://github.com/benlau/qtci/pull/25
+# https://github.com/benlau/qtci/pull/27
 RUN git clone https://github.com/Ablu/qtci.git \
-    && cd qtci && git checkout f8af717ef2e601f5f52b204bb02939508bd1cc14
+    && cd qtci && git checkout 1ec9820e32e51781fbf695f6369301d9f1dd917a
 
 ENV PATH "/opt/Qt/$QT_MAJOR.$QT_MINOR.$QT_PATCH/android_armv7/bin:/android-sdk-linux/tools/bin/:/qtci/bin/:/qtci/recipes/:$PATH"
 ENV VERBOSE 1
