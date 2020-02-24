@@ -9,22 +9,20 @@ ENV OPENSSL_VERSION 1.1.1c
 ENV SDK_VERSION 4333796
 ENV SPEC android-clang
 
-ENV QT_CI_PACKAGES qt.qt$QT_MAJOR.${QT_MAJOR}${QT_MINOR}${QT_PATCH}.android_armv7
-
-RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make imake which findutils \
+RUN dnf install -q -y git wget fontconfig libX11 libX11-xcb java-1.8.0-openjdk-devel unzip make imake which findutils /usr/bin/7z \
     && dnf clean all -q && rm -rf /var/cache/dnf/*
-
-# https://github.com/benlau/qtci/pull/25
-# https://github.com/benlau/qtci/pull/28
-RUN git clone https://github.com/Ablu/qtci.git \
-    && cd qtci && git checkout cf7771ce14150569046a61fbec644ae93c85122d
 
 ENV PATH "/opt/Qt/$QT_MAJOR.$QT_MINOR.$QT_PATCH/android_armv7/bin:/android-sdk-linux/tools/bin/:/qtci/bin/:/qtci/recipes/:$PATH"
 ENV VERBOSE 1
-ENV INSTALLER_FILE qt-opensource-linux-x64-$QT_MAJOR.$QT_MINOR.$QT_PATCH.run
-RUN wget -q https://download.qt.io/archive/qt/$QT_MAJOR.$QT_MINOR/$QT_MAJOR.$QT_MINOR.$QT_PATCH/$INSTALLER_FILE \
-    && extract-qt-installer --disable-progress-report $INSTALLER_FILE /opt/Qt \
-    && rm $INSTALLER_FILE
+
+ADD install-qt.sh /
+RUN bash /install-qt.sh \
+        --version ${QT_MAJOR}.${QT_MINOR}.${QT_PATCH} \
+        --host linux_x64 \
+        --target android \
+        --toolchain android_arm64_v8a \
+        qtbase qtdeclarative qtscript qtsvg qtimageformats qttools
+
 RUN wget -q https://dl.google.com/android/repository/sdk-tools-linux-$SDK_VERSION.zip \
     && mkdir /android-sdk-linux && cd /android-sdk-linux \
     && unzip -q /sdk-tools-linux-$SDK_VERSION.zip && rm /sdk-tools-linux-$SDK_VERSION.zip
